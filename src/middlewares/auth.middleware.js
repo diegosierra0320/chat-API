@@ -12,8 +12,10 @@ const ExtractJwt= require('passport-jwt').ExtractJwt;
 module.exports = (passport) => {
     const options = {
         jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
-        secrectOrKey: jwtSecret
+        secretOrKey: jwtSecret
     }
+
+    console.log(jwtSecret);
 
     passport.use(
         new JwtStrategy(options, async(decoded, done) => {

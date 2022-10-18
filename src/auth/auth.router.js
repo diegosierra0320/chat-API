@@ -7,11 +7,11 @@
 
 const router = require('express').Router()
 const authServices = require('./auth.services')
-const {registrerUser} = require('../users/users.services')
+const {registerUser} = require('../users/users.services')
 
 // prefijo /api/v1/auth
 
-router.post('/registrer', registrerUser)
+router.post('/register', registerUser)
 router.post('/login', authServices.login)
 
 module.exports = router

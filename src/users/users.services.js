@@ -21,7 +21,7 @@ const getUsersById = (req, res) => {
     })
 }
 
-const registrerUser = (req, res) => {
+const registerUser = (req, res) => {
     const {firstName, lastName, email, password, phone, birthday, gender, country} = req.body
 
     if(firstName && lastName && email && password && phone && birthday){
@@ -80,7 +80,7 @@ const patchUser = (req, res) => {
     })
 }
 
-// My user services
+// My user services => Rutas protegidas
 
 const getMyUser = (req, res) => {
     const id = req.user.id
@@ -95,20 +95,25 @@ const getMyUser = (req, res) => {
 
 const patchMyUser = (req, res) => {
     const id = req.user.id
-    usersControllers.updateUser(id)
-        .then(data => {
-            res.status(200).json(data)
+    const { firstName, lastName, phone, birthday, gender, country } = req.body
+    usersControllers.updateUser(id, { firstName, lastName, phone, birthday, gender, country })
+        .then(() => {
+            res.status(200).json({message: 'Your user was edited seccesfully'})
         })
         .catch(err => {
             res.status(400).json({message: err.message})
         })
 }
 
+// Dos tipos de delete:
+// 1. Por administrador
+// 2. Por mi mismo
+
 const deleteMyUser = (req, res) => {
     const id = req.user.id
-    usersControllers.deleteUser(id)
-    .then(data => {
-        res.status(200).json(data)
+    usersControllers.updateUser(id, {status: 'inactive'})
+    .then(() => {
+        res.status(200).json({message: 'Your user was deleted seccesfully'})
     })
     .catch(err => {
         res.status(400).json({message: err.message})
@@ -120,7 +125,7 @@ module.exports = {
     getAllUsers,
     getUsersById,
     patchUser,
-    registrerUser,
+    registerUser,
     deleteUser,
     getMyUser,
     patchMyUser,

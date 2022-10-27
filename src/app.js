@@ -6,6 +6,8 @@ const db = require('./utils/database')
 const {port} = require('./config')
 const userRouter = require('./users/users.router')
 const authRouter = require('./auth/auth.router')
+const conversationRouter = require('./conversations/conversations.router')
+
 const initModels = require('./models/initModels')
 
 // Initial configs
@@ -40,6 +42,7 @@ app.get('/', (req, res) => {
   
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/conversations', conversationRouter)
 
 
 app.listen(port, () => {

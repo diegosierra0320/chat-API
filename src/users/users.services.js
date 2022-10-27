@@ -21,6 +21,7 @@ const getUsersById = (req, res) => {
     })
 }
 
+
 const registerUser = (req, res) => {
     const {firstName, lastName, email, password, phone, birthday, gender, country} = req.body
 

@@ -1,3 +1,28 @@
+# chatAPI
+
+/api/v1
+
+/users
+    - /me
+    - /me/posts
+    - /me/posts/:id
+    - /:id
+
+/conversations
+    - /me
+    - /me/post
+
+/conversations/:conversation_id
+    - /:id
+    - /:id/patch
+    - /:id/delete
+
+/conversations/:conversation_id/messages
+    - /post
+
+/conversations/:conversation_id/messages/:message_id
+    - /:id
+    - /:id/delete
 
 
 SORT

@@ -20,8 +20,6 @@ router.route('/:id')
     .patch(passport.authenticate('jwt', {session: false}), conversationsServices.patchConversation)
     .delete(passport.authenticate('jwt', {session: false}), conversationsServices.deleteConversation)
 
-// router.get('/:id/messages', getMessageByConversation)
-
 router.route('/:id/messages')
     .get(passport.authenticate('jwt', {session: false}), messagesServices.getMessageByConversation)
     .post(passport.authenticate('jwt', {session: false}), messagesServices.createMessage)

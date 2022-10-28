@@ -63,6 +63,15 @@ const deleteConversation = async (id) => {
 }
 
 
+const getConversationsByUser = async (userId) => {
+    const data = await Conversations.findAll({
+        where: {
+            userId
+        }
+    })
+    return data
+}
+
 
 module.exports = {
     getAllConversations,
@@ -70,5 +79,6 @@ module.exports = {
     getMyConversations,
     createConversation,
     upDateConversation,
-    deleteConversation
+    deleteConversation,
+    getConversationsByUser
 }

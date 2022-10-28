@@ -96,6 +96,17 @@ const deleteConversation = (req, res) => {
         });
 }
 
+const getConversationsByUser = (req, res) => {
+    const userId = req.params.id
+    conversationsControllers.getConversationsByUser(userId)
+        .then((data) => {
+            res.status(200).json(data)
+        })
+        .catch((err) => {
+            res.status(400).json({message: err.message})
+        })
+}
+
 
 module.exports = {
     getAllConversations,
@@ -103,5 +114,6 @@ module.exports = {
     getMyConversation,
     createConversation,
     patchConversation,
-    deleteConversation
+    deleteConversation,
+    getConversationsByUser
 }

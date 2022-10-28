@@ -1,9 +1,18 @@
-const { UUID } = require('sequelize')
+const uuid = require('uuid')
 const Conversations = require('../models/conversations.model')
+const Users = require('../models/users.models')
 
 
 const getAllConversations = async () => {
-    const data = await Conversations.findAll()
+    const data = await Conversations.findAll({
+        include: [
+            {
+                model: Users,
+                as: 'user',
+                attributes: ['id', 'firstName', 'lastName', 'email']
+            }
+        ]
+    })
     return data
 }
 
@@ -16,12 +25,21 @@ const getConversationsById = async (id) => {
     return data
 }
 
+const getMyConversations = async (id) => {
+    const data = await Conversations.findAll({
+        where: {
+            id: id,
+        }
+    })
+    return data
+}
+
 const createConversation = async (data) => {
     const newConversation = await Conversations.create({
-        id: UUID.v4(),
+        id: uuid.v4(),
         title: data.title,
         imageUrl: data.imageUrl,
-        createdBy: data.createdBy
+        userId: data.userId
     })
     return newConversation
 }
@@ -49,6 +67,7 @@ const deleteConversation = async (id) => {
 module.exports = {
     getAllConversations,
     getConversationsById,
+    getMyConversations,
     createConversation,
     upDateConversation,
     deleteConversation

@@ -1,5 +1,5 @@
 const db = require('../utils/database')
-const {DataTypes} = require('sequelize')
+const { DataTypes } = require('sequelize')
 const Users = require('./users.models')
 
 const Conversations = db.define('conversations', {
@@ -16,12 +16,12 @@ const Conversations = db.define('conversations', {
         type: DataTypes.STRING,
         field: "image_Url"
     },
-    createdBy: {
+    userId: {
         type: DataTypes.UUID,
         allowNull: false,
-        field: "created_by",
+        field: "user_id",
         references: {
-            key: "id",
+            key: 'id',
             model: Users
         }
     }

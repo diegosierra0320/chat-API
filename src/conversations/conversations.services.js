@@ -26,9 +26,8 @@ const getConversationById = (req, res) => {
 }
 
 const getMyConversation = (req, res) => {
-    const id = req.params.id
-
-    conversationsControllers.getConversationsById(id)
+    const userId = req.user.id
+    conversationsControllers.getMyConversations(userId)
         .then(data => {
             res.status(200).json(data)
         })
@@ -40,11 +39,11 @@ const getMyConversation = (req, res) => {
 
 const createConversation = (req, res) => {
 
-    const userId = req.user.id
-    const { title, createdBy } = req.body
-    if( title && createdBy ){
+    // const userId = req.user.id
+    const { title, userId } = req.body
+    if( title && userId ){
         conversationsControllers.createConversation({
-            title, imageUrl, userId ,createdBy
+            title, userId
         })
         .then((data) => {
             res.status(201).json(data)
@@ -55,7 +54,7 @@ const createConversation = (req, res) => {
     } else {
         res.status(400).json({message: 'All fields must be completed', fields: {
             title: 'string',
-            createdBy: 'uuid'
+            userId: 'uuid'
         }})
     }
 }
@@ -67,7 +66,7 @@ const patchConversation = (req, res) => {
     const { title, createdBy } = req.body
 
     conversationsControllers.upDateConversation(id, {
-        title, imageUrl, userId ,createdBy
+        title, createdBy
     })
     .then(data => {
         if(data[0]){
@@ -87,7 +86,7 @@ const deleteConversation = (req, res) => {
     conversationsControllers.deleteConversation(id)
         .then((data) => {
             if (data) {
-            res.status(204).json(data);
+            res.status(204).json({message: 'Conversation successfully deleted'});
             } else {
             res.status(404).json({ message: "Invalid ID" });
             }
